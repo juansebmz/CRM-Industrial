@@ -8,6 +8,7 @@ const Root = styled('div')(({ theme }) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
+    marginTop: 40,
   },
   '& .content': {
     display: 'flex',
