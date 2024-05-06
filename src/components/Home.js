@@ -1,6 +1,13 @@
 import { Button, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import FilledInput from '@mui/material/FilledInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 const Root = styled('div')(({ theme }) => ({
@@ -57,7 +64,7 @@ function Home() {
 		setForm({ ...form, [prop]: event.target.value });
 	};
 
-
+	const [showPassword, setShowPassword] = React.useState(false);
 
 
 
@@ -85,12 +92,12 @@ function Home() {
 		<div style={{ backgroundColor: 'white', height: '100%', width: '100%' }}>
 			<Root>
 				<div className='table'>
-					<img className='img' src='img2.png'/>
+					<img className='img' src='img2.png' />
 					<div className="box">
 						<div className="boxint">
 							<div className="form">
 								<div className="content">
-									<img src= 'img1.png'/>
+									<img src='img1.png' />
 									<div>Usuario</div>
 									<TextField
 										onChange={onChangeText('user')}
@@ -104,13 +111,14 @@ function Home() {
 										value={form.password}
 										className="textFields"
 										error={error}
+										id="filled-adornment-password"
+										type={showPassword ? 'text' : 'password'}
 									/>
-									<div style={{fontSize: 11, marginBlockEnd: 20}}>¿has olvidado la Contraseña? haz click aquí </div>
-
+									<div style={{ fontSize: 11, marginBlockEnd: 20 }}>¿has olvidado la Contraseña? haz click aquí </div>
 									<Button variant="contained" onClick={sendInfo}>
 										Iniciar sesión
 									</Button>
-									
+
 								</div>
 							</div>
 						</div>
