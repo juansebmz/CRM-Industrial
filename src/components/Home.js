@@ -31,7 +31,7 @@ const Root = styled('div')(({ theme }) => ({
 	'& .img': {
 		boxShadow: '2px 3px 10px #b8bac1',
 		marginTop: 100,
-		width: 459
+		width: 482
 	},
 	'& .box': {
 		boxShadow: '2px 3px 10px #b8bac1',

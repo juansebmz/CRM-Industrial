@@ -35,6 +35,7 @@ export default function ButtonAppBar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    window.location.href = "/"
   };
   return (
     <Box style={{ marginBottom: 60 }} sx={{ flexGrow: 1 }}>

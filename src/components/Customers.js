@@ -2,30 +2,30 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { styled } from '@mui/material/styles';
 import {
-    Table,
-    Button,
-    Container,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    FormGroup,
-    ModalFooter,
+  Table,
+  Button,
+  Container,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
+  ModalFooter,
 } from "reactstrap";
 import Appbar from "./Appbar";
 
 const Root = styled('div')(({ theme }) => ({
-    '& .List': {
-        backgroundColor: '#9EB9CA',
-    },
+  '& .List': {
+    backgroundColor: '#9EB9CA',
+  },
 }));
 
 const data = [
-    { id: 1, personaje: "Naruto", anime: "Naruto" },
-    { id: 2, personaje: "Goku", anime: "Dragon Ball" },
-    { id: 3, personaje: "Kenshin Himura", anime: "Rurouni Kenshin" },
-    { id: 4, personaje: "Monkey D. Luffy", anime: "One Piece" },
-    { id: 5, personaje: "Edward Elric", anime: "Fullmetal Alchemist: Brotherhood" },
-    { id: 6, personaje: "Seto Kaiba", anime: "Yu-Gi-Oh!" },
+  { id: 1, nombre: "Andres", apellido: "Rodriguez", correo: "andres12@gmail.com", telefono: "3053867421" },
+  { id: 2, nombre: "Camilo", apellido: "Sanchez", correo: "Camilo12342@gmail.com", telefono: "3208691424" },
+  { id: 3, nombre: "Julian", apellido: "Zapata", correo: "JulianC2560@gmail.com", telefono: "3053564280" },
+  { id: 4, nombre: "Mariana", apellido: "Moncada", correo: "MarianaMoncada1995@gmail.com", telefono: "3148694270" },
+  { id: 5, nombre: "Carlos", apellido: "Cabrera", correo: "CarlosCabrera1014@gmail.com", telefono: "3057561230" },
+  { id: 6, nombre: "esneider", apellido: "Bravo", correo: "Eneider781216@gmail.com", telefono: "3225567548" },
 ];
 
 
@@ -33,267 +33,326 @@ const data = [
 class Customers extends React.Component {
 
 
-    state = {
-        data: data,
-        modalActualizar: false,
-        modalInsertar: false,
-        form: {
-            id: "",
-            personaje: "",
-            anime: "",
-        },
-    };
+  state = {
+    data: data,
+    modalActualizar: false,
+    modalInsertar: false,
+    form: {
+      id: "",
+      nombre: "",
+      apellido: "",
+      correo: "",
+      telefono: ""
 
-    mostrarModalActualizar = (dato) => {
-        this.setState({
-            form: dato,
-            modalActualizar: true,
-        });
-    };
+    },
+  };
 
-    cerrarModalActualizar = () => {
-        this.setState({ modalActualizar: false });
-    };
+  mostrarModalActualizar = (dato) => {
+    this.setState({
+      form: dato,
+      modalActualizar: true,
+    });
+  };
 
-    mostrarModalInsertar = () => {
-        this.setState({
-            modalInsertar: true,
-        });
-    };
+  cerrarModalActualizar = () => {
+    this.setState({ modalActualizar: false });
+  };
 
-    cerrarModalInsertar = () => {
-        this.setState({ modalInsertar: false });
-    };
+  mostrarModalInsertar = () => {
+    this.setState({
+      modalInsertar: true,
+    });
+  };
 
-    editar = (dato) => {
-        var contador = 0;
-        var arreglo = this.state.data;
-        arreglo.map((registro) => {
-            if (dato.id == registro.id) {
-                arreglo[contador].personaje = dato.personaje;
-                arreglo[contador].anime = dato.anime;
-            }
-            contador++;
-        });
-        this.setState({ data: arreglo, modalActualizar: false });
-    };
+  cerrarModalInsertar = () => {
+    this.setState({ modalInsertar: false });
+  };
 
-    eliminar = (dato) => {
-        var opcion = window.confirm("Estás Seguro que deseas Eliminar el elemento " + dato.id);
-        if (opcion == true) {
-            var contador = 0;
-            var arreglo = this.state.data;
-            arreglo.map((registro) => {
-                if (dato.id == registro.id) {
-                    arreglo.splice(contador, 1);
-                }
-                contador++;
-            });
-            this.setState({ data: arreglo, modalActualizar: false });
+  editar = (dato) => {
+    var contador = 0;
+    var arreglo = this.state.data;
+    arreglo.map((registro) => {
+      if (dato.id == registro.id) {
+        arreglo[contador].nombre = dato.nombre;
+        arreglo[contador].correo = dato.correo;
+        arreglo[contador].telefono = dato.telefono;
+        arreglo[contador].apellido = dato.apellido;
+      }
+      contador++;
+    });
+    this.setState({ data: arreglo, modalActualizar: false });
+  };
+
+  eliminar = (dato) => {
+    var opcion = window.confirm("Estás Seguro que deseas Eliminar el elemento " + dato.id);
+    if (opcion == true) {
+      var contador = 0;
+      var arreglo = this.state.data;
+      arreglo.map((registro) => {
+        if (dato.id == registro.id) {
+          arreglo.splice(contador, 1);
         }
-    };
-
-    insertar = () => {
-        var valorNuevo = { ...this.state.form };
-        valorNuevo.id = this.state.data.length + 1;
-        var lista = this.state.data;
-        lista.push(valorNuevo);
-        this.setState({ modalInsertar: false, data: lista });
+        contador++;
+      });
+      this.setState({ data: arreglo, modalActualizar: false });
     }
+  };
 
-    handleChange = (e) => {
-        this.setState({
-            form: {
-                ...this.state.form,
-                [e.target.name]: e.target.value,
-            },
-        });
-    };
+  insertar = () => {
+    var valorNuevo = { ...this.state.form };
+    valorNuevo.id = this.state.data.length + 1;
+    var lista = this.state.data;
+    lista.push(valorNuevo);
+    this.setState({ modalInsertar: false, data: lista });
+  }
 
-    render() {
+  handleChange = (e) => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
 
-        return (
-            <>
-                <div style={{ backgroundColor: 'white' }}>
-                    <Root>
-                        <Appbar />
-                        <Container >
+  render() {
 
-                            <br />
-                            <Table >
-                                <thead>
-                                    <tr>
-                                        <th style={{ backgroundColor: '#B4D2DC' }}>ID</th>
-                                        <th style={{ backgroundColor: '#B4D2DC' }}>Personaje</th>
-                                        <th style={{ backgroundColor: '#B4D2DC' }}>Anime</th>
+    return (
+      <>
+        <div style={{ backgroundColor: 'white' }}>
+          <Root>
+            <Appbar />
+            <Container >
 
-                                        <Button style={{ backgroundColor: '#015B8E', width: 170, color: '#FFFFFF' }} onClick={() => this.mostrarModalInsertar()}>Añadir cliente</Button>
-                                    </tr>
-                                </thead>
+              <br />
+              <Table >
+                <thead>
+                  <tr>
+                    <th style={{ backgroundColor: '#B4D2DC' }}>nombre</th>
+                    <th style={{ backgroundColor: '#B4D2DC' }}>correo</th>
+                    <th style={{ backgroundColor: '#B4D2DC' }}>telefono</th>
 
-                                <tbody>
-                                    {this.state.data.map((dato) => (
-                                        <tr key={dato.id}>
-                                            <td className="List">{dato.id}</td>
-                                            <td className="List">{dato.personaje}</td>
-                                            <td className="List">{dato.anime}</td>
-                                            <td>
-                                                <Button
-                                                    style={{width:80}}
-                                                    color="primary"
-                                                    onClick={() => this.mostrarModalActualizar(dato)}
-                                                >
-                                                    Editar
-                                                </Button>{" "}
-                                                <Button style={{width:80}} color="danger" onClick={() => this.eliminar(dato)}>Eliminar</Button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        </Container>
+                    <Button style={{ backgroundColor: '#015B8E', width: 170, color: '#FFFFFF' }} onClick={() => this.mostrarModalInsertar()}>Añadir cliente</Button>
+                  </tr>
+                </thead>
 
-                        <Modal isOpen={this.state.modalActualizar}>
-                        <div style={{ margin: 50 }}>
-                            <ModalHeader>
-                                <div><h3>Editar Registro</h3></div>
-                            </ModalHeader>
+                <tbody>
+                  {this.state.data.map((dato) => (
+                    <tr key={dato.id}>
+                      <td className="List">{dato.nombre}</td>
+                      <td className="List">{dato.correo}</td>
+                      <td className="List">{dato.telefono}</td>
+                      <td>
+                        <Button
+                          style={{ width: 80 }}
+                          color="primary"
+                          onClick={() => this.mostrarModalActualizar(dato)}
+                        >
+                          Editar
+                        </Button>{" "}
+                        <Button style={{ width: 80 }} color="danger" onClick={() => this.eliminar(dato)}>Eliminar</Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Container>
 
-                            <ModalBody >
+            <Modal isOpen={this.state.modalActualizar}>
+              <div style={{ margin: 50 }}>
+                <ModalHeader>
+                  <div><h3>Editar Registro</h3></div>
+                </ModalHeader>
 
-                                <FormGroup>
-                                    <label>
-                                        Id:
-                                    </label>
+                <ModalBody >
 
-                                    <input
-                                        className="form-control"
-                                        style={{ backgroundColor: '#CDDEE5' }}
-                                        readOnly
-                                        type="text"
-                                        value={this.state.form.id}
-                                        />
-                                </FormGroup>
+                  <FormGroup>
+                    <label>
+                      Id:
+                    </label>
 
-                                <FormGroup>
-                                    <label>
-                                        Personaje:
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        style={{ backgroundColor: '#CDDEE5' }}
-                                        name="personaje"
-                                        type="text"
-                                        onChange={this.handleChange}
-                                        value={this.state.form.personaje}
-                                        />
-                                </FormGroup>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      readOnly
+                      type="text"
+                      value={this.state.form.id}
+                    />
+                  </FormGroup>
 
-                                <FormGroup>
-                                    <label>
-                                        Anime:
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        style={{ backgroundColor: '#CDDEE5' }}
-                                        name="anime"
-                                        type="text"
-                                        onChange={this.handleChange}
-                                        value={this.state.form.anime}
-                                        />
-                                </FormGroup>
-                            </ModalBody>
+                  <FormGroup>
+                    <label>
+                      nombre:
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      name="nombre"
+                      type="text"
+                      onChange={this.handleChange}
+                      value={this.state.form.nombre}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <label>
+                      apellido:
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      name="apellido"
+                      type="text"
+                      onChange={this.handleChange}
+                      value={this.state.form.apellido}
+                    />
+                  </FormGroup>
 
-                            <ModalFooter>
-                                <Button
-                                    color="primary"
-                                    onClick={() => this.editar(this.state.form)}
-                                >
-                                    Editar
-                                </Button>
-                                <Button
-                                    color="danger"
-                                    onClick={() => this.cerrarModalActualizar()}
-                                    >
-                                    Cancelar
-                                </Button>
-                            </ModalFooter>
-                                    </div>
-                        </Modal>
+                  <FormGroup>
+                    <label>
+                      correo:
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      name="correo"
+                      type="text"
+                      onChange={this.handleChange}
+                      value={this.state.form.correo}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <label>
+                      telefono:
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      name="telefono"
+                      type="text"
+                      onChange={this.handleChange}
+                      value={this.state.form.telefono}
+                    />
+                  </FormGroup>
 
+                </ModalBody>
 
-                        <Modal isOpen={this.state.modalInsertar}>
-                            <div style={{ margin: 50 }}>
-                                <ModalHeader >
-                                    <div><h3>Insertar Personaje</h3></div>
-                                </ModalHeader>
-
-                                <ModalBody>
-                                    <FormGroup>
-                                        <label>
-                                            Id:
-                                        </label>
-
-                                        <input
-                                            className="form-control"
-                                            style={{ backgroundColor: '#CDDEE5' }}
-                                            readOnly
-                                            type="text"
-                                            value={this.state.data.length + 1}
-                                        />
-                                    </FormGroup>
-
-                                    <FormGroup>
-                                        <label>
-                                            Personaje:
-                                        </label>
-                                        <input
-                                            className="form-control"
-                                            style={{ backgroundColor: '#CDDEE5' }}
-                                            name="personaje"
-                                            type="text"
-                                            onChange={this.handleChange}
-                                        />
-                                    </FormGroup>
-
-                                    <FormGroup>
-                                        <label>
-                                            Anime:
-                                        </label>
-                                        <input
-                                            className="form-control"
-                                            style={{ backgroundColor: '#CDDEE5' }}
-                                            name="anime"
-                                            type="text"
-                                            onChange={this.handleChange}
-                                        />
-                                    </FormGroup>
-                                </ModalBody>
-
-                                <ModalFooter>
+                <ModalFooter>
+                  <Button
+                    color="primary"
+                    onClick={() => this.editar(this.state.form)}
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    backgroundColor="black"
+                    onClick={() => this.cerrarModalActualizar()}
+                  >
+                    Cancelar
+                  </Button>
+                </ModalFooter>
+              </div>
+            </Modal>
 
 
-                                    <Button
-                                        color="primary"
-                                        onClick={() => this.insertar()}
-                                    >
-                                        Insertar
-                                    </Button>
-                                    <Button
-                                        className="btn btn-danger"
-                                        onClick={() => this.cerrarModalInsertar()}
-                                    >
-                                        Cancelar
-                                    </Button>
-                                </ModalFooter>
+            <Modal isOpen={this.state.modalInsertar}>
+              <div style={{ margin: 50 }}>
+                <ModalHeader >
+                  <div><h3>Insertar Cliente</h3></div>
+                </ModalHeader>
 
-                            </div>
-                        </Modal>
-                    </Root>
-                </div>
-            </>
-        );
-    }
+                <ModalBody>
+
+                  <FormGroup>
+                    <label>
+                      Id:
+                    </label>
+
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      readOnly
+                      type="text"
+                      value={this.state.data.length + 1}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <label>
+                      nombre:
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      name="nombre"
+                      type="text"
+                      onChange={this.handleChange}
+                    />
+                  </FormGroup>
+
+
+                  <FormGroup>
+                    <label>
+                      apellido:
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      name="apellido"
+                      type="text"
+                      onChange={this.handleChange}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <label>
+                      correo:
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      name="correo"
+                      type="text"
+                      onChange={this.handleChange}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <label>
+                      telefono:
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ backgroundColor: '#CDDEE5' }}
+                      name="telefono"
+                      type="text"
+                      onChange={this.handleChange}
+                    />
+                  </FormGroup>
+                </ModalBody>
+
+                <ModalFooter>
+
+
+                  <Button
+                    color="primary"
+                    onClick={() => this.insertar()}
+                  >
+                    Insertar
+                  </Button>
+                  <Button
+                    className="btn btn-danger"
+                    onClick={() => this.cerrarModalInsertar()}
+                  >
+                    Cancelar
+                  </Button>
+                </ModalFooter>
+
+              </div>
+            </Modal>
+          </Root>
+        </div>
+      </>
+    );
+  }
 }
 
 export default Customers;
