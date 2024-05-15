@@ -8,10 +8,12 @@ const productos = [
   { descripcion: "Camiseta Amarilla", codigo: "0004", precio: "$19.99", imagen: "camisaAmarilla.jpg" },
   { descripcion: "Camiseta Negra", codigo: "0005", precio: "$14.99", imagen: "camisaNegra.jpg" },
   { descripcion: "Camiseta Amarilla", codigo: "0006", precio: "$16.99", imagen: "camisaAmarilla.jpg" },
+  { descripcion: "Camiseta Negra", codigo: "0007", precio: "$14.99", imagen: "camisaNegra.jpg" },
+  { descripcion: "Camiseta Amarilla", codigo: "0008", precio: "$16.99", imagen: "camisaAmarilla.jpg" },
 ];
 
 const buttonStyle = { 
-  backgroundColor:'#007bff', 
+  backgroundColor:'#0000FF',
   color:'white', 
   border:'none', 
   padding:'10px', 
@@ -21,32 +23,40 @@ const buttonStyle = {
 
 const ProductItem = ({ producto, index }) => {
   const productImageStyle = {
-    width: '100%',
+    width: '100%', 
     height: '200px',
     objectFit: 'cover',
     borderRadius: '5px 5px 0 0',
   };
 
   const productItemStyle = {
-    width: '60%',
+    width: '70%',
     margin: '20px',
     border: '1px solid #ccc',
     padding: '0px',
-    borderRadius: '5px',
+    borderRadius: '10px',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#f8f9fa',
+  };
+
+  const infoStyle = {
+    backgroundColor: 'lightblue ',
+    padding: '10px',
+    borderRadius: ' 5px 5px',
   };
 
   return (
     <div key={index} style={productItemStyle}>
       <img src={producto.imagen} alt={producto.descripcion} style={productImageStyle} />
-      <p>{producto.descripcion}</p>
-      <p>{producto.codigo}</p>
-      <p>{producto.precio}</p>
-      <button style={buttonStyle}>Agregar Producto</button>
+      <div style={infoStyle}>
+        <p>{producto.descripcion}</p>
+        <p>{producto.codigo}</p>
+        <p>{producto.precio}</p>
+      </div>
     </div>
   );
 };
+
 
 function Products() {
   const titleStyle = {
@@ -59,9 +69,9 @@ function Products() {
   };
 
   const filterStyle = {
-    backgroundColor: '#e9ecef',
+    backgroundColor: '#ADD8E6', // Cambiado a azul claro
     padding: '20px',
-    borderRadius: '5px',
+    borderRadius: '10px',
     marginBottom: '20px',
   };
 
@@ -70,6 +80,7 @@ function Products() {
       <Appbar />
       <div style={titleStyle}> Productos </div>
       <div style={{ display: 'flex' }}>
+        <div>
         <div style={filterStyle}>
           <h2>Filtros</h2>
           <ul>
@@ -77,9 +88,13 @@ function Products() {
             <li>Lorem ipsum</li>
             <li>Lorem ipsum dolor sit</li>
           </ul>
-          <button style={buttonStyle}>Agregar producto</button>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+        <div style={{backgroundColor:''}}>
+        <button style={ buttonStyle}>
+          Agregar producto</button> 
+        </div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
           {productos.map((producto, index) => (
             <ProductItem key={index} producto={producto} index={index} />
           ))}
@@ -90,4 +105,3 @@ function Products() {
 }
 
 export default Products;
-
