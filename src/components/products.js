@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import Appbar from './Appbar';
 
 const initialProducts = [
-  { descripcion: "Lorem ipsum dolor sit amet", codigo: "0000", precio: "$0", imagen: "camisaAmarilla.jpg", disponible: true },
-  // ... (el resto de tus productos)
+  { descripcion: "Camisa Amarilla", codigo: "0000", precio: "$6", imagen: "camisaAmarilla.jpg", disponible: true },
+  { descripcion: "Camisa Negra", codigo: "0001", precio: "$5", imagen: "camisaNegra.jpg", disponible: true },
+  { descripcion: "Camisa Amarilla", codigo: "0002", precio: "$6", imagen: "camisaAmarilla.jpg", disponible: true },
+  { descripcion: "Camisa Negra", codigo: "0003", precio: "$5", imagen: "camisaNegra.jpg", disponible: true },
+  
 ];
 
 const buttonStyle = {
@@ -62,7 +65,7 @@ function Products() {
     descripcion: '',
     codigo: '',
     precio: '',
-    imagen: 'https://via.placeholder.com/150',
+    imagen: 'camisaAmarilla.jpg',
     disponible: true,
   });
 
@@ -94,7 +97,7 @@ function Products() {
       descripcion: '',
       codigo: '',
       precio: '',
-      imagen: 'https://via.placeholder.com/150',
+      imagen: 'camisaNegra.jpg',
       disponible: true,
     });
     setShowAddProduct(false);
@@ -113,26 +116,18 @@ function Products() {
           placeholder="Buscar..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
-          style={{ marginLeft: 'auto', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
+          style={{ marginRight: 'auto', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
         />
       </div>
-      <div style={{ display: 'flex' }}>
+      <div style={{display: 'flex' }}>
         <div>
-          <div style={filterStyle}>
-            <h2>Filtros</h2>
-            <ul>
-              <li>Lorem ipsum dolor sit amet</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum dolor sit</li>
-            </ul>
-          </div>
           <div>
             <button style={buttonStyle} onClick={() => setShowAddProduct(true)}>
               Agregar producto
             </button>
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+        <div style={{ margin:'auto',display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
           {productosFilter.map((producto, index) => (
             <ProductItem key={index} producto={producto} />
           ))}
