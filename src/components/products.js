@@ -1,37 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Appbar from './Appbar';
 
-const productos = [
-  { descripcion: "Camiseta Amarilla", codigo: "0001", precio: "$19.99", imagen: "camisaAmarilla.jpg" },
-  { descripcion: "Camiseta Negra", codigo: "0002", precio: "$14.99", imagen: "camisaNegra.jpg" },
-  { descripcion: "Camiseta Amarilla", codigo: "0003", precio: "$16.99", imagen: "camisaAmarilla.jpg" },
-  { descripcion: "Camiseta Amarilla", codigo: "0004", precio: "$19.99", imagen: "camisaAmarilla.jpg" },
-  { descripcion: "Camiseta Negra", codigo: "0005", precio: "$14.99", imagen: "camisaNegra.jpg" },
-  { descripcion: "Camiseta Amarilla", codigo: "0006", precio: "$16.99", imagen: "camisaAmarilla.jpg" },
-  { descripcion: "Camiseta Negra", codigo: "0007", precio: "$14.99", imagen: "camisaNegra.jpg" },
-  { descripcion: "Camiseta Amarilla", codigo: "0008", precio: "$16.99", imagen: "camisaAmarilla.jpg" },
+const initialProducts = [
+  { descripcion: "Lorem ipsum dolor sit amet", codigo: "0000", precio: "$0", imagen: "camisaAmarilla.jpg", disponible: true },
+  // ... (el resto de tus productos)
 ];
 
-const buttonStyle = { 
-  backgroundColor:'#0000FF',
-  color:'white', 
-  border:'none', 
-  padding:'10px', 
-  borderRadius:'5px', 
-  cursor:'pointer'
-}; 
+const buttonStyle = {
+  backgroundColor: '#0000FF',
+  color: 'white',
+  border: 'none',
+  padding: '10px',
+  borderRadius: '5px',
+  cursor: 'pointer',
+  marginRight: '10px',
+};
 
-const ProductItem = ({ producto, index }) => {
+const ProductItem = ({ producto }) => {
   const productImageStyle = {
-    width: '100%', 
+    width: '100%',
     height: '200px',
     objectFit: 'cover',
     borderRadius: '5px 5px 0 0',
   };
 
   const productItemStyle = {
-    width: '70%',
-    margin: '20px',
+    width: '200px',
+    margin: '10px',
     border: '1px solid #ccc',
     padding: '0px',
     borderRadius: '10px',
@@ -40,13 +35,14 @@ const ProductItem = ({ producto, index }) => {
   };
 
   const infoStyle = {
-    backgroundColor: 'lightblue ',
+    backgroundColor: 'white',
     padding: '10px',
-    borderRadius: ' 5px 5px',
+    borderRadius: '0 0 5px 5px',
+    textAlign: 'center',
   };
 
   return (
-    <div key={index} style={productItemStyle}>
+    <div style={productItemStyle}>
       <img src={producto.imagen} alt={producto.descripcion} style={productImageStyle} />
       <div style={infoStyle}>
         <p>{producto.descripcion}</p>
@@ -57,8 +53,19 @@ const ProductItem = ({ producto, index }) => {
   );
 };
 
-
 function Products() {
+  const [filtro, setFiltro] = useState('todos');
+  const [busqueda, setBusqueda] = useState('');
+  const [productos, setProductos] = useState(initialProducts);
+  const [showAddProduct, setShowAddProduct] = useState(false);
+  const [newProduct, setNewProduct] = useState({
+    descripcion: '',
+    codigo: '',
+    precio: '',
+    imagen: 'https://via.placeholder.com/150',
+    disponible: true,
+  });
+
   const titleStyle = {
     textAlign: 'left',
     fontSize: '1.8em',
@@ -69,37 +76,104 @@ function Products() {
   };
 
   const filterStyle = {
-    backgroundColor: '#ADD8E6', // Cambiado a azul claro
+    backgroundColor: '#ADD8E6',
     padding: '20px',
     borderRadius: '10px',
     marginBottom: '20px',
   };
 
+  const productosFilter = filtro === 'todos'
+    ? productos.filter(producto => producto.descripcion.toLowerCase().includes(busqueda.toLowerCase()))
+    : filtro === 'disponibles'
+      ? productos.filter(producto => producto.disponible && producto.descripcion.toLowerCase().includes(busqueda.toLowerCase()))
+      : productos.filter(producto => !producto.disponible && producto.descripcion.toLowerCase().includes(busqueda.toLowerCase()));
+
+  const handleAddProduct = () => {
+    setProductos([...productos, newProduct]);
+    setNewProduct({
+      descripcion: '',
+      codigo: '',
+      precio: '',
+      imagen: 'https://via.placeholder.com/150',
+      disponible: true,
+    });
+    setShowAddProduct(false);
+  };
+
   return (
     <div style={{ backgroundColor: 'white' }}>
       <Appbar />
-      <div style={titleStyle}> Productos </div>
+      <div style={titleStyle}>Productos</div>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', paddingLeft: '73px' }}>
+        <button style={buttonStyle} onClick={() => setFiltro('todos')}>Todos los productos</button>
+        <button style={buttonStyle} onClick={() => setFiltro('disponibles')}>Productos disponibles</button>
+        <button style={buttonStyle} onClick={() => setFiltro('agotados')}>Productos agotados</button>
+        <input
+          type="text"
+          placeholder="Buscar..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          style={{ marginLeft: 'auto', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
+        />
+      </div>
       <div style={{ display: 'flex' }}>
         <div>
-        <div style={filterStyle}>
-          <h2>Filtros</h2>
-          <ul>
-            <li>Lorem ipsum dolor sit amet</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum dolor sit</li>
-          </ul>
-        </div>
-        <div style={{backgroundColor:''}}>
-        <button style={ buttonStyle}>
-          Agregar producto</button> 
-        </div>
+          <div style={filterStyle}>
+            <h2>Filtros</h2>
+            <ul>
+              <li>Lorem ipsum dolor sit amet</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum dolor sit</li>
+            </ul>
+          </div>
+          <div>
+            <button style={buttonStyle} onClick={() => setShowAddProduct(true)}>
+              Agregar producto
+            </button>
+          </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
-          {productos.map((producto, index) => (
-            <ProductItem key={index} producto={producto} index={index} />
+          {productosFilter.map((producto, index) => (
+            <ProductItem key={index} producto={producto} />
           ))}
         </div>
       </div>
+      {showAddProduct && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '10px' }}>
+            <h2>Agregar producto</h2>
+            <input
+              type="text"
+              placeholder="Descripción"
+              value={newProduct.descripcion}
+              onChange={(e) => setNewProduct({ ...newProduct, descripcion: e.target.value })}
+              style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}
+            />
+            <input
+              type="text"
+              placeholder="Código"
+              value={newProduct.codigo}
+              onChange={(e) => setNewProduct({ ...newProduct, codigo: e.target.value })}
+              style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}
+            />
+            <input
+              type="text"
+              placeholder="Precio"
+              value={newProduct.precio}
+              onChange={(e) => setNewProduct({ ...newProduct, precio: e.target.value })}
+              style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}
+            />
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <button style={{ ...buttonStyle, marginRight: '10px' }} onClick={() => setShowAddProduct(false)}>
+                Cancelar
+              </button>
+              <button style={buttonStyle} onClick={handleAddProduct}>
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
