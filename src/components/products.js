@@ -6,6 +6,10 @@ const initialProducts = [
   { descripcion: "Camisa Negra", codigo: "0001", precio: "$5", imagen: "camisaNegra.jpg", disponible: true },
   { descripcion: "Camisa Amarilla", codigo: "0002", precio: "$6", imagen: "camisaAmarilla.jpg", disponible: true },
   { descripcion: "Camisa Negra", codigo: "0003", precio: "$5", imagen: "camisaNegra.jpg", disponible: true },
+  { descripcion: "Camisa Amarilla", codigo: "0002", precio: "$6", imagen: "camisaAmarilla.jpg", disponible: true },
+  { descripcion: "Camisa Negra", codigo: "0003", precio: "$5", imagen: "camisaNegra.jpg", disponible: true },
+  { descripcion: "Camisa Amarilla", codigo: "0002", precio: "$6", imagen: "camisaAmarilla.jpg", disponible: true },
+  { descripcion: "Camisa Negra", codigo: "0003", precio: "$5", imagen: "camisaNegra.jpg", disponible: true },
   
 ];
 
@@ -78,12 +82,7 @@ function Products() {
     paddingLeft: '73px',
   };
 
-  const filterStyle = {
-    backgroundColor: '#ADD8E6',
-    padding: '20px',
-    borderRadius: '10px',
-    marginBottom: '20px',
-  };
+
 
   const productosFilter = filtro === 'todos'
     ? productos.filter(producto => producto.descripcion.toLowerCase().includes(busqueda.toLowerCase()))
@@ -102,12 +101,14 @@ function Products() {
     });
     setShowAddProduct(false);
   };
-
   return (
     <div style={{ backgroundColor: 'white' }}>
       <Appbar />
       <div style={titleStyle}>Productos</div>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', paddingLeft: '73px' }}>
+        <button style={buttonStyle} onClick={() => setShowAddProduct(true)}>
+          Agregar producto
+        </button>
         <button style={buttonStyle} onClick={() => setFiltro('todos')}>Todos los productos</button>
         <button style={buttonStyle} onClick={() => setFiltro('disponibles')}>Productos disponibles</button>
         <button style={buttonStyle} onClick={() => setFiltro('agotados')}>Productos agotados</button>
@@ -119,19 +120,10 @@ function Products() {
           style={{ marginRight: 'auto', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
         />
       </div>
-      <div style={{display: 'flex' }}>
-        <div>
-          <div>
-            <button style={buttonStyle} onClick={() => setShowAddProduct(true)}>
-              Agregar producto
-            </button>
-          </div>
-        </div>
-        <div style={{ margin:'auto',display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
-          {productosFilter.map((producto, index) => (
-            <ProductItem key={index} producto={producto} />
-          ))}
-        </div>
+      <div style={{ margin:'auto',display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+        {productosFilter.map((producto, index) => (
+          <ProductItem key={index} producto={producto} />
+        ))}
       </div>
       {showAddProduct && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -171,6 +163,7 @@ function Products() {
       )}
     </div>
   );
+  
 }
 
 export default Products;
