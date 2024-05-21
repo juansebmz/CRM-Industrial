@@ -292,7 +292,7 @@ class Sale extends React.Component {
 
                   <FormGroup>
                     <label>
-                      lastname:
+                      apellido:
                     </label>
                     <input
                       className="form-control"
