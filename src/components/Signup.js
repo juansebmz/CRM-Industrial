@@ -2,7 +2,6 @@ import { Button, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import firebase from './firebaseconfing';
-import { useNavigate } from 'react-router-dom';
 
 
 const Root = styled('div')(({ theme }) => ({
@@ -33,7 +32,7 @@ const Root = styled('div')(({ theme }) => ({
 	'& .img': {
 		boxShadow: '2px 3px 10px #b8bac1',
 		marginTop: 100,
-		width: 482
+		width: 577
 	},
 	'& .box': {
 		boxShadow: '2px 3px 10px #b8bac1',
@@ -47,19 +46,19 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 
-const Home = () => {
-	const navigate = useNavigate();
+const Signup = () => {
 
+
+	const [user, setUser] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	const submit = async(e) => {
 		e.preventDefault()
 		try {
-			const user1 = await firebase.auth().signInWithEmailAndPassword(email, password)
+			const user1 = await firebase.auth().createUserWithEmailAndPassword(email, password)
 			if(user1){
-				alert("inicio exitosamente")
-				navigate("/Customers")
+				alert("cuenta creada exitosamente")
 			}
 		} catch (error) {
 			alert(error)
@@ -77,6 +76,12 @@ const Home = () => {
 							<div className="form">
 								<div className="content">
 									<img src='img1.png' />
+									<div>Usuario</div>
+									<TextField
+										onChange={(e) => setUser(e.target.value)}
+										value={user}
+										className="textFields"
+									/>
 									<div>correo</div>
 									<TextField
 										onChange={(e) => setEmail(e.target.value)}
@@ -89,7 +94,7 @@ const Home = () => {
 										value={password}
 										className="textFields"
 									/>
-									<div style={{ fontSize: 11, marginBlockEnd: 20 }}><a href='/signup'>crear cuenta</a></div>
+									<div style={{ fontSize: 11, marginBlockEnd: 20 }}>¿ya estas registrado? haz click <a href='/'>aquí</a></div>
 									<Button variant="contained" onClick={submit}>
 										Iniciar sesión
 									</Button>
@@ -104,4 +109,4 @@ const Home = () => {
 	);
 }
 
-export default Home;
+export default Signup;

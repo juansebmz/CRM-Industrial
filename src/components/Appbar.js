@@ -35,6 +35,10 @@ export default function ButtonAppBar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    
+  };
+  const handleReturnInicio = () => {
+    setAnchorEl(null);
     window.location.href = "/"
   };
   return (
@@ -48,9 +52,9 @@ export default function ButtonAppBar() {
             </strong>
           </Typography>
           <Button className='button' component={Link} to="/Customers" color="inherit"><GroupsIcon />Clientes</Button>
-          <Button className='button' component={Link} to="/Sale" color="inherit"><StackedLineChartIcon />Ventas</Button>
+          <Button className='button' component={Link} to="/Sale" color="inherit"><StackedLineChartIcon />Venta</Button>
           <Button className='button' component={Link} to="/Products" color="inherit"><AssignmentTurnedInIcon />Productos</Button>
-
+          <Button className='button' component={Link} to="/Orders" color="inherit"><AirportShuttleIcon />Pedidos</Button>
 
           <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -113,7 +117,7 @@ export default function ButtonAppBar() {
                 </ListItemIcon>
                 Configuración
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleReturnInicio}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
