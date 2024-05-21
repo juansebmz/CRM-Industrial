@@ -1,3 +1,4 @@
+//customers.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -63,25 +64,25 @@ const Customers = () => {
 
   const editar = async (dato) => {
     try {
-      await axios.put(`/customers/${dato.id}`, dato);
+      await axios.put(`http://127.0.0.1:3001/customers/${dato._id}`, dato);
       cerrarModalActualizar();
       obtenerClientes();
     } catch (error) {
       console.error("Error al editar cliente:", error);
     }
   };
-
-  const eliminar = async (dato) => {
-    try {
-      const opcion = window.confirm("¿Estás seguro que deseas eliminar el cliente " + dato.id + "?");
-      if (opcion) {
-        await axios.delete(`/customers/${dato.id}`);
-        obtenerClientes();
-      }
-    } catch (error) {
-      console.error("Error al eliminar cliente:", error);
+  //eliminar cliente
+const eliminar = async (dato) => {
+  try {
+    const opcion = window.confirm("¿Estás seguro que deseas eliminar el cliente " + dato._id + "?");
+    if (opcion) {
+      await axios.delete(`http://127.0.0.1:3001/customers/${dato._id}`,{});
+      obtenerClientes();
     }
-  };
+  } catch (error) {
+    console.error("Error al eliminar cliente:", error);
+  }
+};
 
   const insertar = async () => {
     try {

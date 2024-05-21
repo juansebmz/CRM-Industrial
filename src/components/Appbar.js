@@ -54,8 +54,7 @@ export default function ButtonAppBar() {
           <Button className='button' component={Link} to="/Customers" color="inherit"><GroupsIcon />Clientes</Button>
           <Button className='button' component={Link} to="/Sale" color="inherit"><StackedLineChartIcon />Venta</Button>
           <Button className='button' component={Link} to="/Products" color="inherit"><AssignmentTurnedInIcon />Productos</Button>
-          <Button className='button' component={Link} to="/Orders" color="inherit"><AirportShuttleIcon />Pedidos</Button>
-
+          
           <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
               <Tooltip title="Account settings">
