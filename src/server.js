@@ -17,7 +17,7 @@ const saleSchema = new mongoose.Schema({
  name: String,
  price: Number,
  total: Number,
- can: Number
+ can: Number,
 });
 
 // Modelo del cliente
@@ -50,6 +50,7 @@ app.post('/customers', async (req, res) => {
 
 // Ruta para obtener todos los clientes
 app.get('/customers', async (req, res) => {
+
   try {
     const customer =  await Customer.find({}).exec();
     res.status(201).json({ message: 'todos los clientes', customer });
@@ -59,6 +60,15 @@ app.get('/customers', async (req, res) => {
   }
 });
 
+
+ try {
+  const customer =  await Customer.find({}).exec();
+   res.status(201).json({ message: 'todos los clientes', customer });
+ } catch (error) {
+   console.error("Error al obtener clientes:", error);
+   res.status(500).json({ error: 'Error del servidor al obtener clientes' });
+ }
+});
 
 // Ruta para editar un cliente existente
 app.put('/customers/:id', async (req, res) => {
@@ -85,6 +95,7 @@ app.delete('/customers/:id', async (req, res) => {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
     res.status(200).json({ message: 'Cliente eliminado exitosamente', customer: deletedCustomer });
+
   } catch (error) {
     console.error("Error al eliminar cliente:", error);
     res.status(500).json({ error: 'Error del servidor al eliminar cliente' });
@@ -141,8 +152,13 @@ app.delete('/sales/:id', async (req, res) => {
     res.status(500).json({ error: 'Error del servidor al eliminar' });
   }
 });
+  } catch (error) {
+    console.error("Error al eliminar cliente:", error);
+    res.status(500).json({ error: 'Error del servidor al eliminar cliente' });
+  }
+});
 
 app.listen(port, () => {
-  console.log(`Servidor Node.js escuchando en http://localhost:${port}`);
+ console.log(`Servidor Node.js escuchando en http://localhost:${port}`);
 });
 
