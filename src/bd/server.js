@@ -68,7 +68,6 @@ app.get('/customers', async (req, res) => {
    console.error("Error al obtener clientes:", error);
    res.status(500).json({ error: 'Error del servidor al obtener clientes' });
  }
-});
 
 // Ruta para editar un cliente existente
 app.put('/customers/:id', async (req, res) => {
@@ -152,12 +151,6 @@ app.delete('/sales/:id', async (req, res) => {
     res.status(500).json({ error: 'Error del servidor al eliminar' });
   }
 });
-  } catch (error) {
-    console.error("Error al eliminar cliente:", error);
-    res.status(500).json({ error: 'Error del servidor al eliminar cliente' });
-  }
-});
-
 app.listen(port, () => {
  console.log(`Servidor Node.js escuchando en http://localhost:${port}`);
 });
