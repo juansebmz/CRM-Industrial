@@ -128,7 +128,7 @@ const Sale = () => {
                   <th style={{ backgroundColor: '#B4D2DC' }}>Cantidad</th>
                   <th style={{ backgroundColor: '#B4D2DC' }}>Total</th>
                   <th>
-                    <Button style={{ backgroundColor: '#015B8E', width: 170, color: '#FFFFFF' }} onClick={mostrarModalInsertar}>Añadir cliente</Button>
+                    <Button style={{ backgroundColor: '#015B8E', width: 170, color: '#FFFFFF' }} onClick={mostrarModalInsertar}>Añadir Venta</Button>
                   </th>
                 </tr>
               </thead>
@@ -180,7 +180,7 @@ const Sale = () => {
           <Modal isOpen={modalInsertar}>
             <div style={{ margin: 50 }}>
               <ModalHeader >
-                <div><h3>Insertar Cliente</h3></div>
+                <div><h3>Insertar Venta</h3></div>
               </ModalHeader>
               <ModalBody>
                 <FormGroup>
