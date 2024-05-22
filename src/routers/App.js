@@ -1,11 +1,10 @@
 
-import Home from "./components/Home";
-import Sale from "./components/Sale";
-import Products from "./components/products";
-
-import Customers from "./components/Customers";
+import Home from "../components/Home";
+import Sale from "../components/Sale";
+import Products from "../components/products";
+import Customers from "../components/Customers";
 import { Route, Routes } from "react-router-dom";
-import Signup from "./components/Signup";
+import Signup from "../components/Signup";
 
 
 function App() {
