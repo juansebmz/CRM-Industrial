@@ -53,11 +53,11 @@ const Home = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const submit = async(e) => {
+	const submit = async (e) => {
 		e.preventDefault()
 		try {
 			const user1 = await firebase.auth().signInWithEmailAndPassword(email, password)
-			if(user1){
+			if (user1) {
 				alert("inicio exitosamente")
 				navigate("/Customers")
 			}
@@ -88,6 +88,8 @@ const Home = () => {
 										onChange={(e) => setPassword(e.target.value)}
 										value={password}
 										className="textFields"
+										type="password"
+										autoComplete="current-password"
 									/>
 									<div style={{ fontSize: 11, marginBlockEnd: 20 }}><a href='/signup'>crear cuenta</a></div>
 									<Button variant="contained" onClick={submit}>
