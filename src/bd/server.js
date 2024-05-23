@@ -61,14 +61,6 @@ app.get('/customers', async (req, res) => {
 });
 
 
- try {
-  const customer =  await Customer.find({}).exec();
-   res.status(201).json({ message: 'todos los clientes', customer });
- } catch (error) {
-   console.error("Error al obtener clientes:", error);
-   res.status(500).json({ error: 'Error del servidor al obtener clientes' });
- }
-
 // Ruta para editar un cliente existente
 app.put('/customers/:id', async (req, res) => {
   try {
