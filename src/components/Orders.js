@@ -72,7 +72,7 @@ function Orders() {
       price: order.product.price,
       total: order.product.price * order.quantity,
       can: order.quantity,
-    }));
+    }))[0];
 
     try {
       console.log(salesData);
