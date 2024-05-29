@@ -13,6 +13,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 import Appbar from "./Appbar";
+import * as xlsx from 'xlsx';
 
 const Root = styled('div')(({ theme }) => ({
   '& .List': {
@@ -113,6 +114,30 @@ const Sale = () => {
     setForm(updatedForm);
   };
 
+  
+  const generarReporteExcel = () => {
+    // Crear un nuevo libro de trabajo
+    const workbook = xlsx.utils.book_new();
+
+    // Crear una nueva hoja de cálculo
+    const worksheet = xlsx.utils.json_to_sheet(data);
+
+    // Agregar la hoja de cálculo al libro de trabajo
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'Ventas');
+
+    // Generar el archivo Excel
+    const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    // Crear un objeto Blob con el contenido del archivo
+    const excelData = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+    // Crear un enlace para descargar el archivo
+    const downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(excelData);
+    downloadLink.download = 'reporte_ventas.xlsx';
+    downloadLink.click();
+  };
+
   return (
     <>
       <div style={{ backgroundColor: 'white' }}>
@@ -128,7 +153,7 @@ const Sale = () => {
                   <th style={{ backgroundColor: '#B4D2DC' }}>Cantidad</th>
                   <th style={{ backgroundColor: '#B4D2DC' }}>Total</th>
                   <th>
-                    <Button style={{ backgroundColor: '#015B8E', width: 170, color: '#FFFFFF' }} onClick={mostrarModalInsertar}>Añadir Venta</Button>
+                  <Button style={{ backgroundColor: '#015B8E', width: 170, color: '#FFFFFF' }} onClick={generarReporteExcel}>Generar Reporte Excel</Button>
                   </th>
                 </tr>
               </thead>

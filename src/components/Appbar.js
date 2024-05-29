@@ -35,8 +35,13 @@ export default function ButtonAppBar() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleCloseUser = () => {
+    setAnchorEl(null);
+    
+  };
   const handleClose = () => {
     setAnchorEl(null);
+    window.location.href = "https://vivacious-taxi-8cf.notion.site/Documentaci-n-ThreadHub-5c2fdaba1fcf4b93a2ce65e8a312b35a?pvs=4";
     
   };
   const handleReturnInicio = () => {
@@ -108,7 +113,7 @@ export default function ButtonAppBar() {
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleCloseUser}>
                 <Avatar /> Perfil
               </MenuItem>
               <Divider />
@@ -116,7 +121,7 @@ export default function ButtonAppBar() {
                 <ListItemIcon>
                   <Settings fontSize="small" />
                 </ListItemIcon>
-                Configuración
+                Documentacion
               </MenuItem>
               <MenuItem onClick={handleReturnInicio}>
                 <ListItemIcon>
