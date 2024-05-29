@@ -19,6 +19,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { styled } from '@mui/material/styles';
 import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
+import { LocalShipping } from '@mui/icons-material';
 
 const Root = styled('div')(({ theme }) => ({
 	
@@ -55,7 +56,7 @@ export default function ButtonAppBar() {
           <Button className='button' component={Link} to="/Customers" color="inherit"><GroupsIcon />Clientes</Button>
           <Button className='button' component={Link} to="/Sale" color="inherit"><StackedLineChartIcon />Venta</Button>
           <Button className='button' component={Link} to="/Products" color="inherit"><AssignmentTurnedInIcon />Productos</Button>
-          <Button className='button' component={Link} to="/Orders" color="inherit"><AssignmentTurnedInIcon />Pedidos</Button>
+          <Button className='button' component={Link} to="/Orders" color="inherit"><LocalShipping />Pedidos</Button>
           <React.Fragment>  
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
               <Tooltip title="Account settings">
