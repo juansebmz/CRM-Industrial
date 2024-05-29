@@ -1,12 +1,18 @@
-//Orders.js
 import React, { useState } from 'react';
-import AppBar from './Appbar'; 
+import AppBar from './Appbar';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { Button } from '@mui/material';
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
+  ModalFooter,
+} from 'reactstrap';
+import axios from 'axios'; // Añade axios para manejar solicitudes HTTP
 
 const titleStyle = {
   textAlign: 'left',
@@ -18,44 +24,78 @@ const titleStyle = {
 };
 
 const products = [
-  { id: '0000', name: 'Camisa Amarilla', price: '$6', image: '/camisaAmarilla.jpg'  },
-  { id: '0001', name: 'Camisa Negra', price: '$15', image: '/camisaNegra.jpg' },
-  { id: '0002', name: 'Camisa Roja', price: '$8', image: '/camisaRoja.jpg' },
-  { id: '0003', name: 'Camisa Azul', price: '$10', image: '/camisaAzul.jpg' },
-  { id: '0004', name: 'Camisa Verde', price: '$7', image: '/camisaVerde.jpg'  },
-  { id: '0005', name: 'Camisa Blanca', price: '$5', image: '/camisaBlanca.jpg'  },
-  { id: '0006', name: 'Camisa Café', price: '$15', image: '/camisaCafe.jpg'  },
-  { id: '0007', name: 'Camisa Gris', price: '$11', image: '/camisaGris.jpg'  },
-  { id: '0008', name: 'Pantalon Negro', price: '$28', image: '/pantalonNegro.jpg'  },
-  { id: '0009', name: 'Camisa Morada', price: '$20', image: '/camisaMorada.jpg'  },
-  { id: '0010', name: 'Camisa Naranja', price: '$13', image: '/camisaNaranja.jpg'  },
-  { id: '0011', name: 'Camisa Beige', price: '$25', image: '/camisaBeige.jpg'  },
+  { id: '0000', name: 'Camisa Amarilla', price: 6, image: '/camisaAmarilla.jpg' },
+  { id: '0001', name: 'Camisa Negra', price: 15, image: '/camisaNegra.jpg' },
+  { id: '0002', name: 'Camisa Roja', price: 8, image: '/camisaRoja.jpg' },
+  { id: '0003', name: 'Camisa Azul', price: 10, image: '/camisaAzul.jpg' },
+  { id: '0004', name: 'Camisa Verde', price: 7, image: '/camisaVerde.jpg' },
+  { id: '0005', name: 'Camisa Blanca', price: 5, image: '/camisaBlanca.jpg' },
+  { id: '0006', name: 'Camisa Café', price: 15, image: '/camisaCafe.jpg' },
+  { id: '0007', name: 'Camisa Gris', price: 11, image: '/camisaGris.jpg' },
+  { id: '0008', name: 'Pantalon Negro', price: 28, image: '/pantalonNegro.jpg' },
+  { id: '0009', name: 'Camisa Morada', price: 20, image: '/camisaMorada.jpg' },
+  { id: '0010', name: 'Camisa Naranja', price: 13, image: '/camisaNaranja.jpg' },
+  { id: '0011', name: 'Camisa Beige', price: 25, image: '/camisaBeige.jpg' },
 ];
 
 function Orders() {
   const [quantity, setQuantity] = useState({});
+  const [modalInsertar, setModalInsertar] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [orders, setOrders] = useState([]);
 
-  const handleOrder = (product) => {
-    setOrders(prevOrders => [...prevOrders, {product, quantity: quantity[product.id] || 0}]);
-    setQuantity(prevQuantity => ({ ...prevQuantity, [product.id]: 0 }));
+  const mostrarModalInsertar = (product) => {
+    setSelectedProduct(product);
+    setQuantity(prevQuantity => ({ ...prevQuantity, [product.id]: 1 }));
+    setModalInsertar(true);
   };
 
-  const handleCancel = (id) => {
-    setQuantity(prevQuantity => ({ ...prevQuantity, [id]: 0 }));
+  const cerrarModalInsertar = () => {
+    setModalInsertar(false);
+    setSelectedProduct(null);
   };
 
   const handleQuantityChange = (id, value) => {
-    setQuantity(prevQuantity => ({ ...prevQuantity, [id]: value }));
+    const updatedValue = Number(value) > 0 ? Number(value) : 1; // Asegurar que la cantidad sea al menos 1
+    setQuantity(prevQuantity => ({ ...prevQuantity, [id]: updatedValue }));
   };
 
-  const handleFinalOrder = () => {
-    alert(`Pedido finalizado: ${orders.map(order => `${order.product.name}, Cantidad: ${order.quantity}`).join(', ')}`);
-    setOrders([]); // limpia el cuadro de orden de pedidos
+  const handleAddOrder = () => {
+    setOrders(prevOrders => [...prevOrders, { product: selectedProduct, quantity: quantity[selectedProduct.id] || 1 }]);
+    cerrarModalInsertar();
+  };
+
+
+  const handleFinalOrder = async () => {
+    const salesData = orders.map(order => ({
+      name: order.product.name,
+      price: order.product.price,
+      total: order.product.price * order.quantity,
+      can: order.quantity,
+    }))[0];
+
+    try {
+      console.log(salesData);
+      await axios({
+        method: 'post',
+        url: 'http://127.0.0.1:3001/sales',
+        data: salesData
+      });
+      setModalInsertar(false)
+      setOrders([]);
+    } catch (error) {
+      console.error("Error al enviar el pedido:", error);
+      alert('Error al enviar el pedido al servidor.');
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setQuantity(prevQuantity => ({ ...prevQuantity, [selectedProduct.id]: Number(value) }));
   };
 
   const handleFinalCancel = () => {
-    setOrders([]); // limpia el cuadro de orden de pedidos
+    setOrders([]);
   };
 
   return (
@@ -83,21 +123,12 @@ function Orders() {
                           <Typography variant="body2" gutterBottom>
                             ID: {product.id}
                           </Typography>
-                          <TextField
-                            type="number"
-                            value={quantity[product.id] || 0}
-                            onChange={(e) => handleQuantityChange(product.id, e.target.value)}
-                            label="Cantidad"
-                          />
-                          <Button onClick={() => handleOrder(product)}>Pedir</Button> {/* Cambiado a "Pedir" */}
-                          <Button onClick={() => handleCancel(product.id)}>Cancelar</Button>
-                        </Grid>
-                        <Grid item>
+                          <Button onClick={() => mostrarModalInsertar(product)}>Pedir</Button>
                         </Grid>
                       </Grid>
                       <Grid item>
                         <Typography variant="subtitle1" component="div">
-                          {product.price}
+                          ${product.price}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -129,7 +160,7 @@ function Orders() {
                     </Grid>
                     <Grid item>
                       <Typography variant="subtitle1" component="div">
-                        {order.product.price}
+                        ${order.product.price}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -137,10 +168,51 @@ function Orders() {
               </Paper>
             </Grid>
           ))}
-          <Button onClick={handleFinalOrder}>Realizar Pedido</Button> {/* Nuevo botón para realizar el pedido final */}
-          <Button onClick={handleFinalCancel}>Cancelar Pedido</Button> {/* Nuevo botón para cancelar el pedido final */}
+          <Button onClick={handleFinalOrder}>Realizar Pedido</Button>
+          <Button onClick={handleFinalCancel}>Cancelar Pedido</Button>
         </Grid>
       </Grid>
+
+      <Modal isOpen={modalInsertar} toggle={cerrarModalInsertar}>
+        <div style={{ margin: 50 }}>
+          <ModalHeader toggle={cerrarModalInsertar}>
+            <div><h3>Insertar Venta</h3></div>
+          </ModalHeader>
+          <ModalBody>
+            <FormGroup>
+              <label>Nombre:</label>
+              <input className="form-control" name='name' value={selectedProduct?.name} readOnly onChange={handleChange} />
+            </FormGroup>
+            <FormGroup>
+              <label>Precio:</label>
+              <input className="form-control" name='price' value={selectedProduct?.price} readOnly onChange={handleChange} />
+            </FormGroup>
+            <FormGroup>
+              <label>Cantidad:</label>
+              <input
+                className="form-control"
+                name='can'
+                type="number"
+                value={quantity[selectedProduct?.id] || 1}
+                onChange={(e) => handleQuantityChange(selectedProduct.id, e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label>Total</label>
+              <input
+                className="form-control"
+                name='total'
+                value={selectedProduct ? (quantity[selectedProduct.id] || 1) * selectedProduct.price : 0}
+                readOnly
+              />
+            </FormGroup>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={handleAddOrder}>Insertar</Button>
+            <Button color="secondary" onClick={cerrarModalInsertar}>Cancelar</Button>
+          </ModalFooter>
+        </div>
+      </Modal>
     </div>
   );
 }

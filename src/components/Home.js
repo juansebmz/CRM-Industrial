@@ -1,7 +1,7 @@
 import { Button, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
-import firebase from './firebaseconfing';
+import firebase from '../bd/firebaseconfing';
 import { useNavigate } from 'react-router-dom';
 
 
