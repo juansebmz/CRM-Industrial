@@ -114,6 +114,7 @@ app.get('/sales', async (req, res) => {
     res.status(500).json({ error: 'Error del servidor al crear' });
   }
  });
+ 
 
  app.put('/sales/:id', async (req, res) => {
   try {
@@ -143,6 +144,9 @@ app.delete('/sales/:id', async (req, res) => {
     res.status(500).json({ error: 'Error del servidor al eliminar' });
   }
 });
+
+
+ 
 app.listen(port, () => {
  console.log(`Servidor Node.js escuchando en http://localhost:${port}`);
 });
